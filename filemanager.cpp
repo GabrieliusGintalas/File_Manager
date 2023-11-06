@@ -19,6 +19,16 @@ void FileManager::CreateNewFile(const std::string& fileName){
     } else {
         std::cout << "Error creating '" << fileName << "'" << std::endl;
     }
+
+    std::cout << "Would you like to add something to this file?" << std::endl;
+    std::cout << "Enter 'YES' or 'NO'" << std::endl;
+    std::string option;
+    std::cin >> option;
+    if(option == "YES"){
+        EditFile(fileName);
+    } else if (option == "NO"){
+        return;
+    }
 }
 
 void FileManager::EditFile(const std::string& fileName){
@@ -53,6 +63,37 @@ void FileManager::RemoveFile(const std::string& fileName){
             files.erase(iter);
             fileCounter--;
         }
+    }
+}
+
+void FileManager::ViewFile(const std::string& fileName){
+    if(std::find(files.begin(), files.end(), fileName) != files.end()){
+        std::ifstream file(fileName);
+        std::cout << "Contents of '" << fileName << "'" << std::endl;
+        std::cout << "-------------------------------------";
+        // Read the contents of the file line by line
+        std::string line;
+        while(std::getline(file, line)){
+            std::cout << line << std::endl;
+        }
+        
+        file.close();
+        std::cout << "-------------------------------------" << std::endl;
+    }
+}
+
+void FileManager::RenameFile(std::string& oldFileName){
+    std::cout << "What would you like to change the name of this file to? ";
+    std::string newFileName;
+    std::cin >> newFileName;
+    
+    if(std::rename(oldFileName.c_str(), newFileName.c_str()) == 0){
+        std::cout << "Successfully renamed file from: " << oldFileName << " to " << newFileName << std::endl;
+
+        auto it = std::find(files.begin(), files.end(), oldFileName);
+        *it = newFileName;
+    } else {
+        perror("Error renaming file");
     }
 }
 
