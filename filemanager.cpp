@@ -97,6 +97,36 @@ void FileManager::RenameFile(std::string& oldFileName){
     }
 }
 
+void FileManager::CopyFile(const std::string& fileName){
+    std::string copyFileName = "Copy_" + fileName;
+
+    std::ifstream src(fileName, std::ios::binary);
+    if(!src){
+        std::cerr << "Error: Source file '" << fileName << "' could not be opened" << std::endl;
+        return;
+    }
+
+    std::ofstream dest(copyFileName, std::ios::binary);
+    if(!dest){
+        std::cerr << "Error: Destination file '" << fileName << "' could not be opened" << std::endl;
+        return;
+    }
+
+    //Copies source contents to desination file
+    dest << src.rdbuf();
+
+    files.push_back(copyFileName);
+
+    if(src.fail() || dest.fail()){
+        std::cerr << "An error occurred while copying the file." << std::endl;
+    } else {
+        std::cout << "Copied file '" << fileName << "' and made duplicate called " << copyFileName << std::endl;
+    }
+
+    src.close();
+    dest.close();
+}
+
 void FileManager::DeleteAllFiles(){
     for(const auto& fileName : files){
         remove(fileName.c_str());

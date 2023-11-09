@@ -12,7 +12,7 @@ public:
     void RemoveFile(const std::string& fileName);
     void ViewFile(const std::string& fileName);
     void RenameFile(std::string& fileName);
-    //CopyFile
+    void CopyFile(const std::string& fileName);
     //Move File
     //Create Folder
     //Delete Folder

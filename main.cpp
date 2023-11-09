@@ -16,7 +16,8 @@ int main()
         std::cout << "Option 4: List All Files" << std::endl;
         std::cout << "Option 5: View a File" << std::endl;
         std::cout << "Option 6: Rename a File" << std::endl;
-        std::cout << "Option 7: Exit Program" << std::endl;
+        std::cout << "Option 7: Copy a file" << std::endl;
+        std::cout << "Option 8: Exit program" << std::endl;
 
         int optionNum;
         std::cout << "Option: ";
@@ -43,10 +44,16 @@ int main()
             std::cin >> fileName;
             fileManager.ViewFile(fileName);
         } else if (optionNum == 6){
+            fileManager.ListAllFiles();
             std::cout << "Please enter the file name in which you would like to rename: ";
             std::cin >> fileName;
             fileManager.RenameFile(fileName);
         } else if (optionNum == 7){
+            fileManager.ListAllFiles();
+            std::cout << "Please enter the file name in which you would like to copy: ";
+            std::cin >> fileName;
+            fileManager.CopyFile(fileName);
+        } else if (optionNum == 8){
             std::cout << "Thank you for using my program!!" << std::endl;
             fileManager.DeleteAllFiles();
             break;
